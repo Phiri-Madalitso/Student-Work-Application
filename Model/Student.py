@@ -10,6 +10,6 @@ class Student:
         return f"Student({self.student_id}, {self.name}, {self.age}, {self.year}, {self.skills})"
 
 
-stud1 = Student(2800, "Thom", 23, 2, ["Python", "Java", "Github", "Git", "Agile"])
+stud1 = Student(2880, "Thom", 23, 2, ["Python", "Java", "Github", "Git", "Agile", "Scrum"])
 
 print(stud1)

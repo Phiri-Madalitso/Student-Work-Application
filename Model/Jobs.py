@@ -1,4 +1,4 @@
-from .Company import Company, comp1
+from Company import Company, comp1
 
 class Jobs:
     def __init__(self, jobs_id: int, description: str, title: str, required_skills: list, budget: int, status: str, company: Company):

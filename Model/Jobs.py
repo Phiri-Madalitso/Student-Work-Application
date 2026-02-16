@@ -1,0 +1,15 @@
+class Jobs:
+    def __init__(self, jobs_id: int, description: str, title: str, required_skills: list, budget: int, status: str, company_id: int):
+        self.jobs_id = jobs_id
+        self.description = description
+        self.title = title
+        self.required_skills = required_skills
+        self.budget = budget
+        self.status = status
+        self.company_id = company_id
+
+    def __repr__(self):
+        return f"Jobs({self.jobs_id}, {self.description}, {self.title}, {self.required_skills}, {self.budget}, {self.status}, {self.company_id})"
+        
+job1 = Jobs(1001, "Looking for a Python developer to build a web application.", "Python Developer", ["Python", "Django", "REST API"], 5000, "Open", 101)
+print(job1)

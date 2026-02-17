@@ -9,3 +9,5 @@ class Company:
         
 comp1 = Company(101, "Tech Solutions Inc.", "contact@techsolutions.com")
 print(comp1)        
+
+#Shampoo

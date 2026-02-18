@@ -6,8 +6,4 @@ class Company:
 
     def __repr__(self):
         return f"Company({self.company_id}, {self.name}, {self.email})"
-        
-comp1 = Company(101, "Tech Solutions Inc.", "contact@techsolutions.com")
-print(comp1)        
 
-#Shampoo

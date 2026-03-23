@@ -1,5 +1,5 @@
 class Student:
-    """En IT-student som kan matche mot oppgaver. Skills brukes ved matching."""
+    """An IT student that can be matched to jobs. Skills are used for matching."""
 
     def __init__(self, student_id: int, name: str, email: str, skills: list, age: int = None, year: int = None):
         self.student_id = student_id

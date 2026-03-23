@@ -2,7 +2,7 @@ from .Company import Company
 
 
 class Job:
-    """En oppgave publisert av en bedrift. Brukes ved matching og sortering."""
+    """A job published by a company. Used for matching and sorting."""
 
     def __init__(self, job_id: int, description: str, title: str, required_skills: list, budget: int, status: str, company: Company):
         self.job_id = job_id

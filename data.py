@@ -1,12 +1,12 @@
-# Datalag for Student-Work-Application
-# Hva: Eier lister (iterasjon/filtering/sortering) og dicts (O(1)-oppslag på ID).
-# Hvorfor: Oppgaven krever begge strukturer; samlet ett sted unngår duplisering og sirkulære importer.
+# Data layer for Student-Work-Application
+# What: Owns lists (iteration/filtering/sorting) and dicts (O(1) lookup on ID).
+# Why: The assignment requires both structures; keeping them in one place avoids duplication and circular imports.
 
 from Model.Company import Company
 from Model.Student import Student
 from Model.Jobs import Job
 
-# --- Steg 1: Lister og dicts ---
+# --- Step 1: Lists and dicts ---
 students = []
 students_by_id = {}
 companies = []
@@ -15,9 +15,11 @@ jobs = []
 jobs_by_id = {}
 
 
-# --- Steg 2: Registrering ---
+# --- Step 2: Registration ---
 def register_student(student_id: int, name: str, email: str, skills: list, age: int = None, year: int = None):
-    """Oppretter en student og lagrer i både liste og dict. Returnerer studenten."""
+    """Create a student and store it in both list and dict. Returns the student."""
+    if student_id in students_by_id:
+        raise ValueError(f"Student ID {student_id} already exists.")
     student = Student(student_id=student_id, name=name, email=email, skills=skills, age=age, year=year)
     students.append(student)
     students_by_id[student_id] = student
@@ -25,16 +27,20 @@ def register_student(student_id: int, name: str, email: str, skills: list, age: 
 
 
 def register_company(company_id: int, name: str, email: str):
-    """Oppretter en bedrift og lagrer i både liste og dict. Returnerer bedriften."""
+    """Create a company and store it in both list and dict. Returns the company."""
+    if company_id in companies_by_id:
+        raise ValueError(f"Company ID {company_id} already exists.")
     company = Company(company_id=company_id, name=name, email=email)
     companies.append(company)
     companies_by_id[company_id] = company
     return company
 
 
-# --- Steg 3: Opprette jobb ---
+# --- Step 3: Create job ---
 def create_job(job_id: int, title: str, description: str, required_skills: list, budget: int, company_id: int, status: str = "open"):
-    """Bedrift publiserer en oppgave. Oppslag på company_id er O(1). Returnerer jobben eller None."""
+    """Company publishes a job. Lookup on company_id is O(1). Returns the job or None."""
+    if job_id in jobs_by_id:
+        raise ValueError(f"Job ID {job_id} already exists.")
     company = companies_by_id.get(company_id)
     if company is None:
         return None
@@ -44,7 +50,7 @@ def create_job(job_id: int, title: str, description: str, required_skills: list,
     return job
 
 
-# --- Steg 4: Oppslag på ID (O(1)) ---
+# --- Step 4: Lookup by ID (O(1)) ---
 def get_student_by_id(student_id):
     return students_by_id.get(student_id)
 
@@ -57,9 +63,9 @@ def get_job_by_id(job_id):
     return jobs_by_id.get(job_id)
 
 
-# --- Steg 5: Matching (O(n) i antall jobber) ---
+# --- Step 5: Matching (O(n) in number of jobs) ---
 def find_matching_jobs_for_student(student_id):
-    """Returnerer åpne jobber der minst ett required_skill matcher studentens skills."""
+    """Return open jobs where at least one required_skill matches the student's skills."""
     student = get_student_by_id(student_id)
     if student is None:
         return []
@@ -71,7 +77,7 @@ def find_matching_jobs_for_student(student_id):
 
 
 def find_students_for_job(job_id):
-    """Returnerer studenter som matcher jobbens required_skills."""
+    """Return students that match the job's required_skills."""
     job = get_job_by_id(job_id)
     if job is None:
         return []
@@ -79,8 +85,8 @@ def find_students_for_job(job_id):
     return [s for s in students if set(s.skills) & required]
 
 
-# --- Steg 6: Sortering etter budget (O(n log n)) ---
+# --- Step 6: Sorting by budget (O(n log n)) ---
 def get_jobs_sorted_by_budget(only_open: bool = True):
-    """Returnerer jobber sortert på budget. only_open=True gir kun åpne (O(n) filter + O(n log n) sort)."""
+    """Return jobs sorted by budget. only_open=True returns only open jobs (O(n) filter + O(n log n) sort)."""
     to_sort = [j for j in jobs if j.status == "open"] if only_open else list(jobs)
     return sorted(to_sort, key=lambda j: j.budget)

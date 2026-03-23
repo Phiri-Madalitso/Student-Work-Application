@@ -2,15 +2,27 @@
 
 An application where students and companies can collaborate through job postings and skill matching.
 
-## How to run
+## Quick Start (for evaluators/teachers)
 
-1. Open a terminal in this folder.
-2. Run:
-
+1. Clone the repository:
+```bash
+git clone https://github.com/Phiri-Madalitso/Student-Work-Application.git
+```
+2. Open the project folder:
+```bash
+cd Student-Work-Application
+```
+3. Run the prototype:
 ```bash
 python Main.py
 ```
 
+If `python` does not work on Windows, run:
+```bash
+py Main.py
+```
+
+No external dependencies are required (standard Python only).
 ## What the application does
 
 - Register students with ID, name, email, and skills
